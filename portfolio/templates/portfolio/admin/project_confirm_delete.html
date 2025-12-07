@@ -1,0 +1,21 @@
+{% extends 'portfolio/admin/admin_base.html' %}
+
+{% block header_title %}Delete Project{% endblock %}
+
+{% block content %}
+<div class="confirm-container" style="max-width: 500px; margin: 50px auto; background: var(--glass-bg); padding: 40px; border-radius: 20px; border: 1px solid var(--glass-border); text-align: center;">
+    <div style="font-size: 3rem; color: #ef4444; margin-bottom: 20px;">
+        <i class="fas fa-exclamation-triangle"></i>
+    </div>
+    <h3 style="margin-bottom: 15px; font-size: 1.5rem;">Are you sure?</h3>
+    <p style="color: #94a3b8; margin-bottom: 30px;">Do you really want to delete project <strong>"{{ project.title }}"</strong>? This process cannot be undone.</p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-actions" style="display: flex; gap: 15px; justify-content: center;">
+            <button type="submit" class="btn" style="background: #ef4444; color: white; border: none;">Delete</button>
+            <a href="{% url 'project_list' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

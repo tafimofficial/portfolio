@@ -1,0 +1,139 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section id="home" class="hero">
+    <div class="container hero-content">
+        <div class="hero-text" data-aos="fade-right">
+            <h1>Hi, I'm <span>{{ profile.name|default:"Developer" }}</span></h1>
+            <p>{{ profile.bio|default:"Welcome to my portfolio. I build things for the web." }}</p>
+            <div class="hero-btns">
+                <a href="#projects" class="btn btn-primary">View Work</a>
+                {% if profile.resume %}
+                <a href="{{ profile.resume.url }}" class="btn btn-secondary" target="_blank">Resume</a>
+                {% endif %}
+            </div>
+            <!-- Social Links for Hero -->
+            <div class="hero-socials">
+                {% for link in social_links %}
+                <a href="{{ link.url }}" target="_blank"><i class="{{ link.icon_class }}"></i></a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="hero-img" data-aos="fade-left">
+            {% if profile.profile_image %}
+            <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}">
+            {% else %}
+            <!-- Placeholder if no image -->
+            <div class="placeholder-img"></div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- About/Experience Section -->
+<section id="about" class="about-section">
+    <div class="container">
+        <h2 class="section-title" data-aos="fade-up">Experience & Education</h2>
+        
+        <div class="timeline">
+            <!-- Experience -->
+            <div class="timeline-column" data-aos="fade-up" data-aos-delay="100">
+                <h3><i class="fas fa-briefcase"></i> Experience</h3>
+                {% for exp in experiences %}
+                <div class="timeline-item">
+                    <h4>{{ exp.role }}</h4>
+                    <span class="company">{{ exp.company }}</span>
+                    <span class="date">{{ exp.start_date|date:"M Y" }} - {% if exp.is_current %}Present{% else %}{{ exp.end_date|date:"M Y" }}{% endif %}</span>
+                    <p>{{ exp.description }}</p>
+                </div>
+                {% empty %}
+                <p>No experience added yet.</p>
+                {% endfor %}
+            </div>
+
+            <!-- Education -->
+            <div class="timeline-column" data-aos="fade-up" data-aos-delay="200">
+                <h3><i class="fas fa-graduation-cap"></i> Education</h3>
+                {% for edu in education %}
+                <div class="timeline-item">
+                    <h4>{{ edu.degree }}</h4>
+                    <span class="institution">{{ edu.institution }}</span>
+                    <span class="date">{{ edu.start_date|date:"Y" }} - {% if edu.end_date %}{{ edu.end_date|date:"Y" }}{% else %}Present{% endif %}</span>
+                </div>
+                {% empty %}
+                <p>No education added yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section id="skills" class="skills-section">
+    <div class="container">
+        <h2 class="section-title" data-aos="fade-up">My Skills</h2>
+        <div class="skills-grid">
+            {% for skill in skills %}
+            <div class="skill-card" data-aos="zoom-in" data-aos-delay="{{ forloop.counter }}00">
+                {% if skill.icon_class %}
+                <i class="{{ skill.icon_class }}"></i>
+                {% endif %}
+                <h3>{{ skill.name }}</h3>
+                <div class="progress-bar">
+                    <div class="progress" style="width: {{ skill.proficiency }}%;"></div>
+                </div>
+                <span>{{ skill.proficiency }}%</span>
+            </div>
+            {% empty %}
+            <p>No skills added yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects" class="projects-section">
+    <div class="container">
+        <h2 class="section-title" data-aos="fade-up">Featured Projects</h2>
+        <div class="projects-grid">
+            {% for project in featured_projects %}
+            <div class="project-card" data-aos="fade-up">
+                <div class="project-img">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                </div>
+                <div class="project-info">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description|truncatechars:100 }}</p>
+                    <div class="project-tech">
+                        {% for tech in project.technologies.all|slice:":3" %}
+                        <span>{{ tech.name }}</span>
+                        {% endfor %}
+                    </div>
+                    <a href="{% url 'project_detail' project.pk %}" class="btn btn-sm">View Details</a>
+                </div>
+            </div>
+            {% empty %}
+            <p>No featured projects yet.</p>
+            {% endfor %}
+        </div>
+        <div class="text-center" style="margin-top: 2rem;">
+            <a href="{% url 'public_project_list' %}" class="btn btn-secondary">View All Projects</a>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="contact-section">
+    <div class="container">
+        <h2 class="section-title" data-aos="fade-up">Get In Touch</h2>
+        <div class="contact-content" data-aos="fade-up">
+            <p>Interested in working together? Feel free to reach out!</p>
+            <a href="mailto:tafimo@gmail.com" class="btn btn-primary">Say Hello</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

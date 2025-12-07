@@ -1,0 +1,52 @@
+{% extends 'portfolio/admin/admin_base.html' %}
+
+{% block header_title %}Skills{% endblock %}
+
+{% block content %}
+<div class="action-bar" style="margin-bottom: 30px; display: flex; justify-content: flex-end;" data-aos="fade-left">
+    <a href="{% url 'skill_create' %}" class="btn btn-primary"><i class="fas fa-plus"></i> Add New Skill</a>
+</div>
+
+<div class="table-container" style="background: var(--glass-bg); border-radius: 15px; overflow: hidden; border: 1px solid var(--glass-border);" data-aos="fade-up" data-aos-delay="100">
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr style="background: rgba(15, 23, 42, 0.6); text-align: left;">
+                <th style="padding: 15px 25px; color: var(--primary-color);">Icon/Image</th>
+                <th style="padding: 15px 25px; color: var(--primary-color);">Name</th>
+                <th style="padding: 15px 25px; color: var(--primary-color);">Proficiency</th>
+                <th style="padding: 15px 25px; color: var(--primary-color);">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for skill in skills %}
+            <tr style="border-bottom: 1px solid var(--glass-border); transition: background 0.3s;" onmouseover="this.style.background='rgba(30, 41, 59, 0.5)'" onmouseout="this.style.background='transparent'">
+                <td style="padding: 15px 25px;">
+                    {% if skill.image %}
+                    <img src="{{ skill.image.url }}" alt="{{ skill.name }}" style="width: 40px; height: 40px; object-fit: contain;">
+                    {% elif skill.icon_class %}
+                    <i class="{{ skill.icon_class }}" style="font-size: 1.5rem; color: var(--text-color);"></i>
+                    {% else %}
+                    <div style="width: 40px; height: 40px; background: #334155; border-radius: 5px;"></div>
+                    {% endif %}
+                </td>
+                <td style="padding: 15px 25px; font-weight: 500;">{{ skill.name }}</td>
+                <td style="padding: 15px 25px;">
+                    <div style="width: 100%; max-width: 150px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+                        <div style="width: {{ skill.proficiency }}%; height: 100%; background: var(--primary-color);"></div>
+                    </div>
+                    <span style="font-size: 0.8rem; color: #94a3b8;">{{ skill.proficiency }}%</span>
+                </td>
+                <td style="padding: 15px 25px;">
+                    <a href="{% url 'skill_update' skill.pk %}" style="color: var(--secondary-color); margin-right: 15px;" title="Edit"><i class="fas fa-edit"></i></a>
+                    <a href="{% url 'skill_delete' skill.pk %}" style="color: #ef4444;" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="padding: 30px; text-align: center; color: #94a3b8;">No skills found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

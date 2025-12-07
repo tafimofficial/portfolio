@@ -1,0 +1,51 @@
+{% extends 'portfolio/admin/admin_base.html' %}
+
+{% block header_title %}Projects{% endblock %}
+
+{% block content %}
+<div class="action-bar" style="margin-bottom: 30px; display: flex; justify-content: flex-end;" data-aos="fade-left">
+    <a href="{% url 'project_create' %}" class="btn btn-primary"><i class="fas fa-plus"></i> Add New Project</a>
+</div>
+
+<div class="table-container" style="background: var(--glass-bg); border-radius: 15px; overflow: hidden; border: 1px solid var(--glass-border);" data-aos="fade-up" data-aos-delay="100">
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr style="background: rgba(15, 23, 42, 0.6); text-align: left;">
+                <th style="padding: 15px 25px; color: var(--primary-color);">Image</th>
+                <th style="padding: 15px 25px; color: var(--primary-color);">Title</th>
+                <th style="padding: 15px 25px; color: var(--primary-color);">Featured</th>
+                <th style="padding: 15px 25px; color: var(--primary-color);">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project in projects %}
+            <tr style="border-bottom: 1px solid var(--glass-border); transition: background 0.3s;" onmouseover="this.style.background='rgba(30, 41, 59, 0.5)'" onmouseout="this.style.background='transparent'">
+                <td style="padding: 15px 25px;">
+                    {% if project.image %}
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}" style="width: 60px; height: 40px; object-fit: cover; border-radius: 5px;">
+                    {% else %}
+                    <div style="width: 60px; height: 40px; background: #334155; border-radius: 5px;"></div>
+                    {% endif %}
+                </td>
+                <td style="padding: 15px 25px; font-weight: 500;">{{ project.title }}</td>
+                <td style="padding: 15px 25px;">
+                    {% if project.featured %}
+                    <span style="color: #4ade80;"><i class="fas fa-check-circle"></i> Yes</span>
+                    {% else %}
+                    <span style="color: #94a3b8;">No</span>
+                    {% endif %}
+                </td>
+                <td style="padding: 15px 25px;">
+                    <a href="{% url 'project_update' project.pk %}" style="color: var(--secondary-color); margin-right: 15px;" title="Edit"><i class="fas fa-edit"></i></a>
+                    <a href="{% url 'project_delete' project.pk %}" style="color: #ef4444;" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="padding: 30px; text-align: center; color: #94a3b8;">No projects found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

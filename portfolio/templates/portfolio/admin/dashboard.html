@@ -1,0 +1,43 @@
+{% extends 'portfolio/admin/admin_base.html' %}
+
+{% block header_title %}Overview{% endblock %}
+
+{% block content %}
+<div class="stats-grid">
+    <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="stat-icon"><i class="fas fa-project-diagram"></i></div>
+        <div class="stat-info">
+            <h4>Projects</h4>
+            <p>{{ projects_count }}</p>
+        </div>
+    </div>
+    <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="stat-icon"><i class="fas fa-code"></i></div>
+        <div class="stat-info">
+            <h4>Skills</h4>
+            <p>{{ skills_count }}</p>
+        </div>
+    </div>
+    <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="stat-icon"><i class="fas fa-briefcase"></i></div>
+        <div class="stat-info">
+            <h4>Experience</h4>
+            <p>{{ experiences_count }}</p>
+        </div>
+    </div>
+    <div class="stat-card" data-aos="fade-up" data-aos-delay="400">
+        <div class="stat-icon"><i class="fas fa-graduation-cap"></i></div>
+        <div class="stat-info">
+            <h4>Education</h4>
+            <p>{{ education_count }}</p>
+        </div>
+    </div>
+    <div class="stat-card" data-aos="fade-up" data-aos-delay="500">
+        <div class="stat-icon"><i class="fas fa-share-alt"></i></div>
+        <div class="stat-info">
+            <h4>Social Links</h4>
+            <p>{{ social_links_count }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

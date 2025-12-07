@@ -1,0 +1,29 @@
+{% extends 'portfolio/base.html' %}
+{% block content %}
+<section class="projects-section public-project-page">
+    <div class="container">
+        <h2 class="section-title" data-aos="fade-up">All Projects</h2>
+        <div class="projects-grid">
+            {% for project in projects %}
+            <div class="project-card" data-aos="fade-up" data-aos-delay="{{ forloop.counter }}00">
+                <div class="project-img">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                </div>
+                <div class="project-info">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description|truncatechars:100 }}</p>
+                    <div class="project-tech">
+                        {% for tech in project.technologies.all|slice:":3" %}
+                        <span>{{ tech.name }}</span>
+                        {% endfor %}
+                    </div>
+                    <a href="{% url 'project_detail' project.pk %}" class="btn btn-sm">View Details</a>
+                </div>
+            </div>
+            {% empty %}
+            <p>No projects found.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
